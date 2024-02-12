@@ -511,6 +511,9 @@ class Chown extends Command {
 	 */
 	public function chmod($progress, $files, $mode, $umask = 0000, $recursive = false, $stripx = true) {
 		foreach ($this->toIterator($files) as $file) {
+			if (!file_exists($file)) {
+				continue;
+			}
 			if(!is_null($progress)) {
 				$progress->advance();
 			}
