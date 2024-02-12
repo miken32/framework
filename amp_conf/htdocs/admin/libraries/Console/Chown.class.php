@@ -315,6 +315,9 @@ class Chown extends Command {
 		if(empty($path)) {
 			throw new \Exception("Path is empty!");
 		}
+		if (!file_exists($path)) {
+			return;
+		}
 		$blacklist = $this->blacklist;
 		if(!empty($blacklist['files'])) {
 			array_walk($blacklist['files'], function(&$value, $key) {
@@ -430,6 +433,9 @@ class Chown extends Command {
 	 */
 	public function chgrp($progress, $files, $group, $recursive = false) {
 		foreach ($this->toIterator($files) as $file) {
+			if (!file_exists($file)) {
+				continue;
+			}
 			if(!is_null($progress)) {
 				$progress->advance();
 			}
@@ -465,6 +471,9 @@ class Chown extends Command {
 	 */
 	public function chown($progress, $files, $user, $recursive = false) {
 		foreach ($this->toIterator($files) as $file) {
+			if (!file_exists($file)) {
+				continue;
+			}
 			if(!is_null($progress)) {
 				$progress->advance();
 			}
